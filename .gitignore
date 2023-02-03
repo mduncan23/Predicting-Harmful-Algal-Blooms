@@ -4,3 +4,5 @@ zippedData/*.*
 # Ignore checkpoint folder
 .ipynb_checkpoints/*.*
 
+*.pickle
+*.pkl
