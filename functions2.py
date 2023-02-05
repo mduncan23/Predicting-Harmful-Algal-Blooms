@@ -263,7 +263,7 @@ def try_get_sat_info(df):
             temp_df = temp_df[temp_df['has_sample_point'] == True]
             sat_dict[row['uid']] = temp_df
         except:
-            sat_dict[row['uid']] = None
+            sat_dict[row['uid']] = temp_df
         
     return sat_dict
 
