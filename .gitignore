@@ -6,6 +6,5 @@ zippedData/*.*
 
 
 *.pyc
-hide/*.*
-hide/submissions/*.*
+
 hide/*
