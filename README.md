@@ -163,10 +163,8 @@ See the full analysis in the [Jupyter Notebook](./Final_Report.ipynb) or review 
 │   ├── severity_by_location.jpg
 │   Scratch_Notebooks
 │   ├── Batch_pulling_data.ipynb
-│   ├── Climate_data_pulls.ipynb
-│   ├── type_count.png
-│   ├── type_percent.png
-│   └── well.jpg
+│   └── Climate_data_pulls.ipynb
+├── environment.yml
 ├── Final_Report.ipynb
 ├── hab_functions.py
 ├── presentation.pdf
