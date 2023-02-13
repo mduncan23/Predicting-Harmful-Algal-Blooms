@@ -42,7 +42,9 @@ Data is available from all agencies, the EPA has manually sampled over 23,500 si
 
 HABs typically form within a matter of days to weeks. For this analysis, I will be using data within a 15 day range prior to EPA sampling. 
 
-**Note about satelitte and climate data:** Due to the instability of the API and the time frame required to pull data for all EPA samples, the data was accumulated in batches. A sample pull of the data is located in the Final Notebook, though more insight into the methods behind gathering the satellite data and climate data can be found in notebooks: "Batch_pulling_data" and "Climate_data_pulls", respectively.
+**Note about satelitte and climate data:** Due to the instability of the API and the time frame required to pull data for all EPA samples, the data was accumulated in batches. A sample pull of the data is located in the Final Notebook, though more insight into the methods behind gathering the satellite data and climate data can be found in notebooks: "Batch_pulling_data" and "Climate_data_pulls", respectively. 
+
+In this repo, I have included the `hab_functions.py` with custom functions needed to run this notebook. I have also the `Environment.yml` to ensure that you have the correct environment to run the notebook.
 
 ### EPA Data
 
@@ -88,3 +90,85 @@ I have also pulled in elevation data from Planetary Computer through the Coperni
 NOAA's High-Resolution Rapid Refresh (HRRR) dataset is a real-time and historical atmospheric modeling system. This analysis used temperature data taken at 12pm CST for one day and 5 day periods prior to the EPA sampling event. This was done to show how temperature may have influenced the HAB prior to sampling.
 
 ## Modeling
+This analysis utilized a custom scoring method: each Region's RMSE was calculated and then averaged. The dummy model, utilizing the most frequent severity as it's strategy, received a Regional RMSE score of 1.65. 
+
+I utilized an iterative approach to find the best model for predicting the severity of harmful algal blooms. I attempted several different modeling algorithms to find the best blend of cross-validated scores on training and test data in an attempt to maximize scores while reducing overfitting. I then compared the cross validated results to a seperate validation set. 
+
+After comparing Logistic Regression, Random Forest, XGBoost, LinearSVC, Multi-layer Perceptron (MLP), K-Nearest Neighbors, and Stacking Classifiers, the Stacking Classifier provided the best results. The chosen Stacking Classifier model performs the best of all models, scoring .738 on unseen validation data and returning cross validated results of .776 for test data and .413 on training data. While it does not have the lowest validation score of all data, it does have the best combined results of all three indicators (unseen data, cross validated data, and reducing overfitting). This model is still overfit though.
+
+### Visualizing Errors
+My model predicted the correct severity level over 2/3rds of the time on held-aside validation data. For sample sites that were incorrectly predicted, 71% were only off in their predictions by one point and 27% were only off in there predictions by two points. Only 2% of predictions incorrectly predicted by more than 2 points. The majority of errors were located in the Southern Region of the United States. Below are geographical locations of all sample sites that were incorrectly predicted.
+
+![mapped_errors](/Images/mapped_errors.jpg)
+
+## Conclusions
+
+### Analysis
+This analysis has run dozens of models to predict the severity of harmful algal blooms in inland bodies of water. Ultimately the best model was the Stacking Classifier using Logistic Regression, K-Nearest Neighbors, Random Forest, and XGBoost. The 5-fold cross validated score was .7768 for the Regional Root Mean Squared Error. When Tested on unseen validation data, the model scored:
+
+- RMSE for south (n=2744): 0.9059
+- RMSE for midwest (n=626): 0.8336
+- RMSE for west (n=1030): 0.4063
+- RMSE for northeast (n=309): 0.8419
+- Final score: 0.7469129213950463
+
+The model has a much better predictive ability for the western region than the other regions. This makes sense when we look at the EPA data and can visually see that the western region has a relatively consistent severity average of between about 3.5 and 4. Visually, the Northeast and Midwest appear to have the most variability in their severity, though the model is better able to predict for these regions than for the south.
+
+It is important to note that the safety of people, animals, and the environment is at stake, so the focus of this analysis was to minimize the error in the predictions rather than to achieve a high level of accuracy. The use of root mean squared error was appropriate for this purpose as it measures the deviation between the predicted values and the actual values, and the goal was to keep this deviation as low as possible.
+
+This analysis has proven that machine learning using existing EPA sample data, NASA Satellite Imagery, and NOAA climate data can be used to better predict the severity of harmful algal blooms in inland bodies of water.
+
+Additional Funding to continue research and implement improvements on the model is vital to the safety and security of our aquatic environments. In the future considerations section below, I highlight some of the areas where additional research could benefit the model.
+
+### Future Considerations
+There are several areas for improvement that could further enhance the performance of the predictive model. These include:
+
+- Incorporating multiple satellite images for each site: Utilizing multiple satellite images for each site has the potential to significantly improve the model's predictive ability by providing more data for the model to learn from.
+
+
+- Using more climate data: In this analysis, only two points of climate data (temperature from 1 and 5 days prior to EPA sampling) were used. Incorporating more climate data points, such as wind gusts and precipitation, from the NOAA HRRR system would greatly improve the model's ability to predict HABs.
+
+
+- Using more temperature data: In this analysis, only one temperature point was taken for each day. Utilizing hourly temperature data from the NOAA HRRR system would significantly improve the model's ability to predict HABs.
+
+Additional funding and resources for continued research and implementation of these improvements are crucial for ensuring the safety and protection of the environment and the communities that rely on freshwater sources.
+
+## For More Information
+
+See the full analysis in the [Jupyter Notebook](./Final_Report.ipynb) or review this [presentation](./presentation.pdf).
+
+**For additional info, contact:**
+- Matthew Duncan: mduncan0923@gmail.com
+
+![closing_image](/Images/closing_image.jpg)
+
+## Repository Structure
+
+```
+├── Data
+│   ├── clean_test_data.csv
+│   ├── clean_train_data.csv
+│   ├── metadata.csv
+│   ├── train_labels.csv
+├── Images
+│   ├── algea.jpg
+│   ├── closing_image.jpg
+│   ├── first_sat.jpg
+│   ├── lake.jpg
+│   ├── mapped_errors.jpg
+│   ├── regional_over_time.jpg
+│   ├── satellite.jpg
+│   ├── seasonal_samples.jpg
+│   ├── second_sat.jpg
+│   ├── severity_by_location.jpg
+│   Scratch_Notebooks
+│   ├── Batch_pulling_data.ipynb
+│   ├── Climate_data_pulls.ipynb
+│   ├── type_count.png
+│   ├── type_percent.png
+│   └── well.jpg
+├── Final_Report.ipynb
+├── hab_functions.py
+├── presentation.pdf
+└── README.md
+```
