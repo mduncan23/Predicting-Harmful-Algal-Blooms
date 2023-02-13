@@ -44,7 +44,7 @@ HABs typically form within a matter of days to weeks. For this analysis, I will 
 
 **Note about satelitte and climate data:** Due to the instability of the API and the time frame required to pull data for all EPA samples, the data was accumulated in batches. A sample pull of the data is located in the Final Notebook, though more insight into the methods behind gathering the satellite data and climate data can be found in notebooks: "Batch_pulling_data" and "Climate_data_pulls", respectively. 
 
-In this repo, I have included the `hab_functions.py` with custom functions needed to run this notebook. I have also the `Environment.yml` to ensure that you have the correct environment to run the notebook.
+In this repo, I have included the `hab_functions.py` with custom functions needed to run this notebook. I have also the `environment.yml` to ensure that you have the correct environment to run the notebook.
 
 ### EPA Data
 
