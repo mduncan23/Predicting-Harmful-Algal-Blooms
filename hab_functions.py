@@ -271,67 +271,67 @@ def try_get_sat_info(df):
 
 ############################
 
-# Can use this if I decide to use multiple satelitte images
-def try_get_sat_info2(df):
+# # Can use this if I decide to use multiple satelitte images
+# def try_get_sat_info2(df):
 
-    '''
-    input a dataframe and get a dictionary with satellite information for each row in the dataframe
-    '''
+#     '''
+#     input a dataframe and get a dictionary with satellite information for each row in the dataframe
+#     '''
     
-    catalog = Client.open(
-    "https://planetarycomputer.microsoft.com/api/stac/v1", modifier=pc.sign_inplace
-    )
+#     catalog = Client.open(
+#     "https://planetarycomputer.microsoft.com/api/stac/v1", modifier=pc.sign_inplace
+#     )
     
-    sat_dict = {}
-    for index in range(len(df)):
-        row = df.iloc[index]
+#     sat_dict = {}
+#     for index in range(len(df)):
+#         row = df.iloc[index]
 
-        # Get all satellite images
-        search = catalog.search(collections=["landsat-8-c2-l2", "landsat-9-c2-l2", "sentinel-2-l2a"],
-                                bbox=row['bbox'],
-                                datetime=row['date_range'],
-                                query={'eo:cloud_cover': {'lt':100}}
-    )
-
-
-        # Going through Satellite info
-
-        # search for sat images and create a dataframe with results for one sample
-        search_items = [item for item in search.item_collection()]
+#         # Get all satellite images
+#         search = catalog.search(collections=["landsat-8-c2-l2", "landsat-9-c2-l2", "sentinel-2-l2a"],
+#                                 bbox=row['bbox'],
+#                                 datetime=row['date_range'],
+#                                 query={'eo:cloud_cover': {'lt':100}}
+#     )
 
 
-        pic_details = []
-        for pic in search_items:
-            pic_details.append(
-            {
-            'item': pic,
-            'satelite_name':pic.collection_id,
-            'img_date':pic.datetime.date(),
-            'cloud_cover(%)': pic.properties['eo:cloud_cover'],
-            'img_bbox': pic.bbox,
-            'min_long': pic.bbox[0],
-            "max_long": pic.bbox[2],
-            "min_lat": pic.bbox[1],
-            "max_lat": pic.bbox[3]
-            }
-            )
+#         # Going through Satellite info
 
-        temp_df = pd.DataFrame(pic_details)
-        try:
-            # Check to make sure sample location is actually within sat image
-            temp_df['has_sample_point'] = (
-                (temp_df.min_lat < row.latitude)
-                & (temp_df.max_lat > row.latitude)
-                & (temp_df.min_long < row.longitude)
-                & (temp_df.max_long > row.longitude)
-            )
+#         # search for sat images and create a dataframe with results for one sample
+#         search_items = [item for item in search.item_collection()]
 
-            temp_df = temp_df[temp_df['has_sample_point'] == True]
-            sat_dict[row['uid']] = temp_df
-        except:
-            sat_dict[row['uid']] = temp_df
+
+#         pic_details = []
+#         for pic in search_items:
+#             pic_details.append(
+#             {
+#             'item': pic,
+#             'satelite_name':pic.collection_id,
+#             'img_date':pic.datetime.date(),
+#             'cloud_cover(%)': pic.properties['eo:cloud_cover'],
+#             'img_bbox': pic.bbox,
+#             'min_long': pic.bbox[0],
+#             "max_long": pic.bbox[2],
+#             "min_lat": pic.bbox[1],
+#             "max_lat": pic.bbox[3]
+#             }
+#             )
+
+#         temp_df = pd.DataFrame(pic_details)
+#         try:
+#             # Check to make sure sample location is actually within sat image
+#             temp_df['has_sample_point'] = (
+#                 (temp_df.min_lat < row.latitude)
+#                 & (temp_df.max_lat > row.latitude)
+#                 & (temp_df.min_long < row.longitude)
+#                 & (temp_df.max_long > row.longitude)
+#             )
+
+#             temp_df = temp_df[temp_df['has_sample_point'] == True]
+#             sat_dict[row['uid']] = temp_df
+#         except:
+#             sat_dict[row['uid']] = temp_df
         
-    return sat_dict
+#     return sat_dict
 
 ############################
 
@@ -571,29 +571,29 @@ def try_get_sat_to_features(df):
 
 ############################
 
-# A function to try get it all in one
-def try_get_sat_to_features2(df):
+# # A function to try get it all in one
+# def try_get_sat_to_features2(df):
     
-    '''
-    input a dataframe of raw data and get sat images, convert to arrays, and turn into features.
-    '''
-    catalog = Client.open(
-    "https://planetarycomputer.microsoft.com/api/stac/v1", modifier=pc.sign_inplace
-    )
+#     '''
+#     input a dataframe of raw data and get sat images, convert to arrays, and turn into features.
+#     '''
+#     catalog = Client.open(
+#     "https://planetarycomputer.microsoft.com/api/stac/v1", modifier=pc.sign_inplace
+#     )
     
-    # get sat info
-    satelite_dict = try_get_sat_info2(df)
+#     # get sat info
+#     satelite_dict = try_get_sat_info2(df)
     
-    # pick best sat
-    single_df = pick_best_sat(df, satelite_dict)
+#     # pick best sat
+#     single_df = pick_best_sat(df, satelite_dict)
     
-    # get image arrays from best sats
-    img_arrays = get_arrays_from_sats(single_df)
+#     # get image arrays from best sats
+#     img_arrays = get_arrays_from_sats(single_df)
     
-    # get a dataframe with relevant features
-    feature_df = get_features(single_df, img_arrays)
+#     # get a dataframe with relevant features
+#     feature_df = get_features(single_df, img_arrays)
     
-    return feature_df
+#     return feature_df
 
 ############################
 
