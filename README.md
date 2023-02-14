@@ -38,7 +38,7 @@ Accurate predictions of HABs are crucial in order to ensure the safety of the co
 
 ## Understanding the Data
 
-Data is available from all agencies, the EPA has manually sampled over 23,500 sites across the United States from 2013 through 2021 and provided severity levels based on Cynanobacteria count for over 17,000 sites. NASA has provided access to their databank of satellite imagery. NOAA has provided access to their historical climate database.
+Data is available from all agencies, the EPA has manually sampled over 23,500 sites across the United States from 2013 through 2021 and provided severity levels based on Cyanobacteria count for over 17,000 sites. NASA has provided access to their databank of satellite imagery. NOAA has provided access to their historical climate database.
 
 HABs typically form within a matter of days to weeks. For this analysis, I will be using data within a 15 day range prior to EPA sampling. 
 
@@ -106,11 +106,11 @@ My model predicted the correct severity level over 2/3rds of the time on held-as
 ### Analysis
 This analysis has run dozens of models to predict the severity of harmful algal blooms in inland bodies of water. Ultimately the best model was the Stacking Classifier using Logistic Regression, K-Nearest Neighbors, Random Forest, and XGBoost. The 5-fold cross validated score was .7768 for the Regional Root Mean Squared Error. When Tested on unseen validation data, the model scored:
 
-- RMSE for south (n=2744): 0.9059
-- RMSE for midwest (n=626): 0.8336
-- RMSE for west (n=1030): 0.4063
-- RMSE for northeast (n=309): 0.8419
-- Final score: 0.7469129213950463
+- RMSE for south (n=2744): 0.8968
+- RMSE for midwest (n=626): 0.824
+- RMSE for west (n=1030): 0.399
+- RMSE for northeast (n=309): 0.8341
+- Final score: 0.7384900178900713
 
 The model has a much better predictive ability for the western region than the other regions. This makes sense when we look at the EPA data and can visually see that the western region has a relatively consistent severity average of between about 3.5 and 4. Visually, the Northeast and Midwest appear to have the most variability in their severity, though the model is better able to predict for these regions than for the south.
 
