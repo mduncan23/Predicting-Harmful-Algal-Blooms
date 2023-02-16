@@ -135,7 +135,7 @@ Additional funding and resources for continued research and implementation of th
 
 ## For More Information
 
-See the full analysis in the [Jupyter Notebook](./Final_Report.ipynb) or review this [presentation](./presentation.pdf).
+See the full analysis in [Jupyter Notebook Introduction](./Introduction_and_Data.ipynb) and [Jupyter Notebook Conclusion](./Modeling_and_Conclusion.ipynb) or review this [presentation](./presentation.pdf).
 
 **For additional info, contact:**
 - Matthew Duncan: mduncan0923@gmail.com
@@ -166,7 +166,8 @@ See the full analysis in the [Jupyter Notebook](./Final_Report.ipynb) or review 
 │   ├── Climate_data_pulls.ipynb
 |   └── hab_functions.py
 ├── environment.yml
-├── Final_Report.ipynb
+├── Introduction_and_Data.ipynb
+├── Modeling_and_Conclusion.ipynb
 ├── hab_functions.py
 ├── presentation.pdf
 └── README.md
