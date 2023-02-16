@@ -166,7 +166,8 @@ See the full analysis in the [Jupyter Notebook](./Final_Report.ipynb) or review 
 │   ├── Climate_data_pulls.ipynb
 |   └── hab_functions.py
 ├── environment.yml
-├── Final_Report.ipynb
+├── Introduction_and_Data.ipynb
+├── Modeling_and_Conclusion.ipynb
 ├── hab_functions.py
 ├── presentation.pdf
 └── README.md
